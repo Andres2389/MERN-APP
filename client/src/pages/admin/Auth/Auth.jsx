@@ -32,7 +32,7 @@ export  function Auth() {
       <GridColumn mobile={16} tablet={16} computer={16}>
        <div className='auth'>
        <div>
-       <img src={iconLogo} className='logo'/>
+       <img src='/src/assets/svg/logo.svg' className='logo'/>
        </div>
        <Tab panes={panes} className="auth_forms"  activeIndex={activeIndex} onTabChange={(_, data) => setActiveIndex(data.activeIndex)}/>
        </div>

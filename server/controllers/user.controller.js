@@ -5,7 +5,7 @@ const image = require("../utils/image")
 async function getMe(req, res) {
     
     const { user_id } = req.user;
-    const response = await User.findById(user_id); // Add await here
+    const response = await User.findById(user_id); 
 
     if (!response) {
         res.status(400).send({ msg: "No se ha encontrado el usuario" });
@@ -20,20 +20,19 @@ async function getUsers(req, res) {
     
     let response = null
 
-    if (active == undefined) {
+    if (active === undefined) {
         response = await User.find()
     } else {
         response = await User.find({ active })
     }
-
+  
      res.status(200).send(response)
 }
 
-
 async function createUser(req, res) {
-    
+
     const { password } = req.body
-    const user = new User({...req.body, active: false})
+    const user = new User({ ...req.body, active: false})
 
     const salt = bcrypt.genSaltSync(10)
     const hashPassword = bcrypt.hashSync(password ,salt)
@@ -49,9 +48,10 @@ async function createUser(req, res) {
         if (error) {
             res.status(400).send({msg:"error al crear ususario"})
         } else{
-            res.status(200).send(userStored)
+            res.status(201).send(userStored)
         }
     })   
+   
 }
 
 async function updateUser(req, res) {
@@ -73,22 +73,21 @@ async function updateUser(req, res) {
 
     User.findByIdAndUpdate({ _id: id}, userData, (error) => {
         if (error) {
-            res.status(400).send({msg:"error al atualizar"})
+            res.status(400).send({msg:"Error al atualizar el ususario"})
         } else {
-            res.status(200).send({msg:"datos de usuario actualizados"})
+            res.status(200).send({msg:"Datos de usuario actualizados"})
         }
     })
 }
-
 
 async function deleteUser(req ,res) {
     const { id } = req.params
 
     User.findByIdAndDelete(id, (error) => {
         if (error) {
-            res.status(400).send({ msg: "error al eliminar el usuario"})
+            res.status(400).send({ msg: "Error al eliminar el usuario"})
         } else {
-            res.status(200).send({msg:"usuario eliminado"})
+            res.status(200).send({msg:"Usuario eliminado"})
         }
     })
 }
